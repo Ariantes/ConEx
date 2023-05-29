@@ -17,6 +17,7 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
         var map;
+        var markers = []; // Array zum Speichern der erstellten Marker
 
         // Initialisierung der Karte
         function initializeMap() {
@@ -24,7 +25,7 @@
 
             // Hinzufügen des benutzerdefinierten Bildes als Karte
             var imageUrl = 'ConMM.jpg'; // Pfad/Link zur Bilddatei "ConMM.jpg"
-            var imageBounds = [[0, 0], [0, 0]]; // Initiale Image-Bounds
+            var imageBounds = calculateImageBounds(imageUrl); // Berechnung der Image-Bounds
             var imageOverlay = L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
             // Event-Handler für das Klicken auf die Karte
@@ -35,6 +36,12 @@
                 if (markerText) {
                     var marker = L.marker(markerLatLng).addTo(map);
                     marker.bindPopup(markerText).openPopup();
+                    marker.on('click', function (event) {
+                        removeMarker(marker);
+                    });
+
+                    // Hinzufügen des Markers zum Array
+                    markers.push(marker);
 
                     // Hier müsste eine serverseitige Logik eingefügt werden, um das Symbol zu speichern
                     // und es für alle Benutzer verfügbar zu machen.
@@ -56,6 +63,50 @@
 
             var marker = L.marker(markerLatLng).addTo(map);
             marker.bindPopup(markerText).openPopup();
+            marker.on('click', function (event) {
+                removeMarker(marker);
+            });
+
+            // Hinzufügen des Markers zum Array
+            markers.push(marker);
+        }
+
+        // Funktion zum Entfernen eines Markers
+        function removeMarker(marker) {
+            var confirmation = confirm('Möchten Sie diesen Marker entfernen?');
+
+            if (confirmation) {
+                // Entfernen des Markers von der Karte
+                marker.removeFrom(map);
+
+                // Entfernen des Markers aus dem Array
+                var index = markers.indexOf(marker);
+                if (index > -1) {
+                    markers.splice(index, 1);
+                }
+
+                // Hier müsste eine serverseitige Logik eingefügt werden, um den Marker zu entfernen
+                // und die Änderung für alle Benutzer zu speichern.
+            }
+        }
+
+        // Berechnung der Image-Bounds, um das Bild quadratisch erscheinen zu lassen
+        function calculateImageBounds(imageUrl) {
+            var aspectRatio = 1; // Seitenverhältnis von 1 für quadratische Darstellung
+
+            var image = new Image();
+            image.src = imageUrl;
+
+            var width = image.width;
+            var height = image.height;
+
+            if (width > height) {
+                var diff = (width - height) / 2;
+                return [[-diff / aspectRatio, -diff], [(height + diff) / aspectRatio, height + diff]];
+            } else {
+                var diff = (height - width) / 2;
+                return [[-width / (2 * aspectRatio), -width / 2], [(width / (2 * aspectRatio)), width / 2 + diff]];
+            }
         }
 
         // Initialisierung der Karte beim Laden der Seite
