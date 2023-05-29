@@ -25,7 +25,7 @@
 
             // Hinzufügen des benutzerdefinierten Bildes als Karte
             var imageUrl = 'ConMM.jpg'; // Pfad/Link zur Bilddatei "ConMM.jpg"
-            var imageBounds = [-500-500]; // Berechnung der Image-Bounds
+            var imageBounds = [[0,0], [0,0]];; // Berechnung der Image-Bounds
             var imageOverlay = L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
             // Event-Handler für das Klicken auf die Karte
