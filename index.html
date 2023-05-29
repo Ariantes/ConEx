@@ -21,7 +21,7 @@
 
         // Initialisierung der Karte
         function initializeMap() {
-            map = L.map('map').setView([0, 0], 0);
+            map = L.map('map').setView([0, 0], 10);
 
             // Hinzufügen des benutzerdefinierten Bildes als Karte
             var imageUrl = 'ConMM.jpg'; // Pfad/Link zur Bilddatei "ConMM.jpg"
@@ -32,6 +32,7 @@
             map.on('click', function (event) {
                 var markerLatLng = event.latlng; // Koordinaten des Klicks
                 var markerText = prompt('Geben Sie den Text für das Symbol ein:');
+                markerText = markerText + " " + event.latlng;
 
                 if (markerText) {
                     var marker = L.marker(markerLatLng).addTo(map);
