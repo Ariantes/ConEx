@@ -6,9 +6,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
         #map {
-            width: 100%;
-            height: 0;
-            padding-bottom: 75%; /* Quadratisches Seitenverhältnis 4:3 */
+            width: 100vh;
+            height: 100vh;
         }
     </style>
 </head>
@@ -20,17 +19,15 @@
         // Funktion zur Anpassung der Kartengröße
         function resizeMap() {
             var mapContainer = document.getElementById('map');
-            var aspectRatio = 3 / 4; // Quadratisches Seitenverhältnis 4:3
+            var windowWidth = window.innerWidth;
+            var windowHeight = window.innerHeight;
 
-            // Berechnung der neuen Höhe basierend auf der Breite des Anzeigebereichs
-            var newHeight = mapContainer.offsetWidth * aspectRatio;
+            // Ermittlung der maximalen Seitenlänge basierend auf der Fenstergröße
+            var maxLength = Math.max(windowWidth, windowHeight);
 
-            // Anpassung der Höhe des Anzeigebereichs
-            mapContainer.style.height = newHeight + 'px';
-
-            // Aktualisierung der Image-Bounds, um den gesamten Kartenbereich auszufüllen
-            var imageBounds = [[-newHeight / 2, -mapContainer.offsetWidth / 2], [newHeight / 2, mapContainer.offsetWidth / 2]];
-            imageOverlay.setBounds(imageBounds);
+            // Anpassung der Kartenabmessungen
+            mapContainer.style.width = maxLength + 'px';
+            mapContainer.style.height = maxLength + 'px';
         }
 
         // Erstellen der Karte
@@ -38,7 +35,7 @@
 
         // Hinzufügen des benutzerdefinierten Bildes als Karte
         var imageUrl = 'ConMM.jpg'; // Pfad/Link zur Bilddatei "ConMM.jpg"
-        var imageBounds = [[-1000, -750], [1000, 750]]; // Initiale Image-Bounds
+        var imageBounds = [[-maxLength / 2, -maxLength / 2], [maxLength / 2, maxLength / 2]]; // Image-Bounds basierend auf der maximalen Seitenlänge
         var imageOverlay = L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
         // Initiale Anpassung der Kartengröße
