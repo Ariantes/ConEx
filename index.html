@@ -23,7 +23,7 @@
             var windowHeight = window.innerHeight;
 
             // Ermittlung der maximalen Seitenlänge basierend auf der Fenstergröße
-            var maxLength = Math.max(windowWidth, windowHeight);
+            var maxLength = Math.min(windowWidth, windowHeight) - 50;
 
             // Anpassung der Kartenabmessungen
             mapContainer.style.width = maxLength + 'px';
