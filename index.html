@@ -25,12 +25,6 @@
         var imageBounds = [[-1000, -750], [1000, 750]]; // Begrenzen Sie die Bildkoordinaten entsprechend Ihrer Karte
         L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
-        // Initiale Anpassung der Kartengröße
-        resizeMap();
-
-        // Aktualisierung der Kartengröße bei Fenstergrößenänderungen
-        window.addEventListener('resize', resizeMap);
-
     </script>
 </body>
 </html>
