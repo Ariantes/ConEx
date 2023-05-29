@@ -2,12 +2,13 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Interaktive Leaflet-Karte</title>
+    <title>Interaktive Leaflet-Karte mit eigenem Bild</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
         #map {
-            width: 800px;
-            height: 800px;
+            width: 100%;
+            height: 0;
+            padding-bottom: 100%;
         }
     </style>
 </head>
@@ -16,34 +17,31 @@
 
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
+        // Funktion zur Anpassung der Kartengröße
+        function resizeMap() {
+            var mapContainer = document.getElementById('map');
+            var aspectRatio = 1; // Quadratisches Seitenverhältnis
+
+            // Berechnung der neuen Höhe basierend auf der Breite des Anzeigebereichs
+            var newHeight = mapContainer.offsetWidth * aspectRatio;
+
+            // Anpassung der Höhe des Anzeigebereichs
+            mapContainer.style.height = newHeight + 'px';
+        }
+
         // Erstellen der Karte
         var map = L.map('map').setView([0, 0], 0);
 
         // Hinzufügen des benutzerdefinierten Bildes als Karte
-        var imageUrl = 'ConMM.jpg';
+        var imageUrl = 'ConMM.jpg'; // Pfad/Link zur Bilddatei "ConMM.jpg"
         var imageBounds = [[-400, -400], [400, 400]]; // Begrenzen Sie die Bildkoordinaten entsprechend Ihrer Karte
         L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
-        // Hinzufügen eines Markers
-        L.marker([51.5, -0.09]).addTo(map)
-            .bindPopup('Ein Beispielmarker.');
+        // Initiale Anpassung der Kartengröße
+        resizeMap();
 
-        // Hinzufügen eines Kreises
-        L.circle([51.508, -0.11], {
-            color: 'red',
-            fillColor: '#f03',
-            fillOpacity: 0.5,
-            radius: 500
-        }).addTo(map)
-            .bindPopup('Ein Beispielkreis.');
-
-        // Hinzufügen einer Polygon-Form
-        var polygon = L.polygon([
-            [51.509, -0.08],
-            [51.503, -0.06],
-            [51.51, -0.047]
-        ]).addTo(map)
-            .bindPopup('Ein Beispiel-Polygon.');
+        // Aktualisierung der Kartengröße bei Fenstergrößenänderungen
+        window.addEventListener('resize', resizeMap);
 
     </script>
 </body>
