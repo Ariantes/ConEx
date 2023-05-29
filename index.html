@@ -16,38 +16,76 @@
 
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
-        // Funktion zur Anpassung der Kartengröße
-        function resizeMap() {
-            var mapContainer = document.getElementById('map');
-            var windowWidth = window.innerWidth;
-            var windowHeight = window.innerHeight;
+        var map;
 
-            // Ermittlung der maximalen Seitenlänge basierend auf der Fenstergröße
-            var maxLength = Math.min(windowWidth, windowHeight) - 50;
+        // Initialisierung der Karte
+        function initializeMap() {
+            // Funktion zur Anpassung der Kartengröße
+            function resizeMap() {
+                var mapContainer = document.getElementById('map');
+                var windowWidth = window.innerWidth;
+                var windowHeight = window.innerHeight;
 
-            // Anpassung der Kartenabmessungen
-            mapContainer.style.width = maxLength + 'px';
-            mapContainer.style.height = maxLength + 'px';
+                // Ermittlung der maximalen Seitenlänge basierend auf der Fenstergröße
+                var maxLength = Math.min(windowWidth, windowHeight) - 50;
 
-            // Aktualisierung der Image-Bounds basierend auf der maximalen Seitenlänge
-            var imageBounds = [[-maxLength / 2, -maxLength / 2], [maxLength / 2, maxLength / 2]];
-            imageOverlay.setBounds(imageBounds);
+                // Anpassung der Kartenabmessungen
+                mapContainer.style.width = maxLength + 'px';
+                mapContainer.style.height = maxLength + 'px';
+
+                // Aktualisierung der Image-Bounds basierend auf der maximalen Seitenlänge
+                var imageBounds = [[-maxLength / 2, -maxLength / 2], [maxLength / 2, maxLength / 2]];
+                imageOverlay.setBounds(imageBounds);
+            }
+            map = L.map('map').setView([0, 0], 0);
+            
+            // Hinzufügen des benutzerdefinierten Bildes als Karte
+            var imageUrl = 'ConMM.jpg'; // Pfad/Link zur Bilddatei "ConMM.jpg"
+            var imageBounds = [[-500, -500], [500, 500]]; // Initiale Image-Bounds
+            var imageOverlay = L.imageOverlay(imageUrl, imageBounds).addTo(map);
+
+            // Initiale Anpassung der Kartengröße
+            resizeMap();
+
+            // Aktualisierung der Kartengröße bei Fenstergrößenänderungen
+            window.addEventListener('resize', resizeMap);
+            // Laden und Anzeigen der gespeicherten Symbole
+            loadMarkers();
+        }
+        // Funktion zum Laden und Anzeigen der gespeicherten Symbole
+        function loadMarkers() {
+            // Hier müsste eine serverseitige Logik eingefügt werden, um die gespeicherten Symbole abzurufen
+            // und sie der Karte hinzuzufügen.
+
+            // Beispiel für ein gespeichertes Symbol
+            var markerLatLng = [0, 0]; // Koordinaten des Symbols
+            var markerText = 'Beschriftetes Symbol'; // Beschriftung des Symbols
+
+            var marker = L.marker(markerLatLng).addTo(map);
+            marker.bindPopup(markerText).openPopup();
         }
 
-        // Erstellen der Karte
-        var map = L.map('map').setView([0, 0], 0);
+        // Funktion zum Hinzufügen eines beschrifteten Symbols
+        function addMarker() {
+            var markerLatLng = map.getCenter(); // Verwenden Sie die aktuellen Kartenzentrumskoordinaten
+            var markerText = prompt('Geben Sie den Text für das Symbol ein:');
 
-        // Hinzufügen des benutzerdefinierten Bildes als Karte
-        var imageUrl = 'ConMM.jpg'; // Pfad/Link zur Bilddatei "ConMM.jpg"
-        var imageBounds = [[-500, -500], [500, 500]]; // Initiale Image-Bounds
-        var imageOverlay = L.imageOverlay(imageUrl, imageBounds).addTo(map);
+            if (markerText) {
+                var marker = L.marker(markerLatLng).addTo(map);
+                marker.bindPopup(markerText).openPopup();
 
-        // Initiale Anpassung der Kartengröße
-        resizeMap();
+                // Hier müsste eine serverseitige Logik eingefügt werden, um das Symbol zu speichern
+                // und es für alle Benutzer verfügbar zu machen.
+            }
+        }
 
-        // Aktualisierung der Kartengröße bei Fenstergrößenänderungen
-        window.addEventListener('resize', resizeMap);
+        // Initialisierung der Karte beim Laden der Seite
+        document.addEventListener('DOMContentLoaded', function () {
+            initializeMap();
+        });
+    </script>
 
+    <button onclick="addMarker()">Symbol hinzufügen</button>
     </script>
 </body>
 </html>
