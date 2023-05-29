@@ -25,7 +25,7 @@
 
             // Hinzufügen des benutzerdefinierten Bildes als Karte
             var imageUrl = 'ConMM.jpg'; // Pfad/Link zur Bilddatei "ConMM.jpg"
-            var imageBounds = [[0,0], [0,0]];; // Berechnung der Image-Bounds
+            var imageBounds = [[0,0],[0,0]]; // Berechnung der Image-Bounds
             var imageOverlay = L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
             // Event-Handler für das Klicken auf die Karte
@@ -58,7 +58,7 @@
             // und sie der Karte hinzuzufügen.
 
             // Beispiel für ein gespeichertes Symbol
-            var markerLatLng = [[0,0], [0,0]]; // Koordinaten des Symbols
+            var markerLatLng = [0, 0]; // Koordinaten des Symbols
             var markerText = 'Beschriftetes Symbol'; // Beschriftung des Symbols
 
             var marker = L.marker(markerLatLng).addTo(map);
@@ -89,6 +89,7 @@
                 // und die Änderung für alle Benutzer zu speichern.
             }
         }
+
 
         // Initialisierung der Karte beim Laden der Seite
         document.addEventListener('DOMContentLoaded', function () {
