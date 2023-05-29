@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
         #map {
-            width: 2000px;
-            height: 2000px;
+            width: 95vh;
+            height: 95vh;
         }
     </style>
 </head>
@@ -25,7 +25,7 @@
 
             // Hinzufügen des benutzerdefinierten Bildes als Karte
             var imageUrl = 'ConMM.jpg'; // Pfad/Link zur Bilddatei "ConMM.jpg"
-            var imageBounds = calculateImageBounds(imageUrl); // Berechnung der Image-Bounds
+            var imageBounds = [-500-500]; // Berechnung der Image-Bounds
             var imageOverlay = L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
             // Event-Handler für das Klicken auf die Karte
@@ -58,7 +58,7 @@
             // und sie der Karte hinzuzufügen.
 
             // Beispiel für ein gespeichertes Symbol
-            var markerLatLng = [0, 0]; // Koordinaten des Symbols
+            var markerLatLng = [[0,0], [0,0]]; // Koordinaten des Symbols
             var markerText = 'Beschriftetes Symbol'; // Beschriftung des Symbols
 
             var marker = L.marker(markerLatLng).addTo(map);
@@ -87,25 +87,6 @@
 
                 // Hier müsste eine serverseitige Logik eingefügt werden, um den Marker zu entfernen
                 // und die Änderung für alle Benutzer zu speichern.
-            }
-        }
-
-        // Berechnung der Image-Bounds, um das Bild quadratisch erscheinen zu lassen
-        function calculateImageBounds(imageUrl) {
-            var aspectRatio = 1; // Seitenverhältnis von 1 für quadratische Darstellung
-
-            var image = new Image();
-            image.src = imageUrl;
-
-            var width = image.width;
-            var height = image.height;
-
-            if (width > height) {
-                var diff = (width - height) / 2;
-                return [[-diff / aspectRatio, -diff], [(height + diff) / aspectRatio, height + diff]];
-            } else {
-                var diff = (height - width) / 2;
-                return [[-width / (2 * aspectRatio), -width / 2], [(width / (2 * aspectRatio)), width / 2 + diff]];
             }
         }
 
