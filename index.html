@@ -32,10 +32,6 @@
                 // Anpassung der Kartenabmessungen
                 mapContainer.style.width = maxLength + 'px';
                 mapContainer.style.height = maxLength + 'px';
-
-                // Aktualisierung der Image-Bounds basierend auf der maximalen Seitenlänge
-                var imageBounds = [[-maxLength / 2, -maxLength / 2], [maxLength / 2, maxLength / 2]];
-                imageOverlay.setBounds(imageBounds);
             }
             map = L.map('map').setView([0, 0], 0);
             
