@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
         #map {
-            width: 98vh;
-            height: 98vh;
+            width: 100vh;
+            height: 100vh;
         }
     </style>
 </head>
@@ -28,6 +28,10 @@
             // Anpassung der Kartenabmessungen
             mapContainer.style.width = maxLength + 'px';
             mapContainer.style.height = maxLength + 'px';
+
+            // Aktualisierung der Image-Bounds basierend auf der maximalen Seitenlänge
+            var imageBounds = [[-maxLength / 2, -maxLength / 2], [maxLength / 2, maxLength / 2]];
+            imageOverlay.setBounds(imageBounds);
         }
 
         // Erstellen der Karte
@@ -35,7 +39,7 @@
 
         // Hinzufügen des benutzerdefinierten Bildes als Karte
         var imageUrl = 'ConMM.jpg'; // Pfad/Link zur Bilddatei "ConMM.jpg"
-        var imageBounds = [[-maxLength / 2, -maxLength / 2], [maxLength / 2, maxLength / 2]]; // Image-Bounds basierend auf der maximalen Seitenlänge
+        var imageBounds = [[-1000, -750], [1000, 750]]; // Initiale Image-Bounds
         var imageOverlay = L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
         // Initiale Anpassung der Kartengröße
